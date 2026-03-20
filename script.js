@@ -64,33 +64,73 @@ const form = document.getElementById('contacto-form');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('submit-form');
+  const originalText = btn.textContent;
+  
+  // Mostrar animación de envío
   btn.textContent = 'Enviando...';
   btn.disabled = true;
+  btn.style.cursor = 'not-allowed';
 
-  const data = new FormData(form);
+  // Obtener valores del formulario
+  const nombre = document.getElementById('nombre').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const plan = document.getElementById('plan').value;
+  const mensaje = document.getElementById('mensaje').value.trim();
+
+  // Validación básica
+  if (!nombre || !email) {
+    btn.textContent = 'Completá nombre y email';
+    btn.classList.add('btn--error');
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove('btn--error');
+      btn.disabled = false;
+      btn.style.cursor = 'pointer';
+    }, 3000);
+    return;
+  }
+
+  // Preparar datos para Formspree
+  const formData = new FormData();
+  formData.append('name', nombre);
+  formData.append('email', email);
+  formData.append('plan', plan);
+  formData.append('message', mensaje);
+  formData.append('_subject', `Nueva consulta web - ${plan || 'Sin plan'}`);
 
   try {
     const res = await fetch(form.action, {
       method: 'POST',
-      body: data,
+      body: formData,
       headers: { 'Accept': 'application/json' }
     });
+    
     if (res.ok) {
       btn.textContent = '¡Mensaje enviado!';
       btn.classList.add('btn--success');
       form.reset();
+      
+      // Resetear después de 3 segundos
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.classList.remove('btn--success');
+        btn.disabled = false;
+        btn.style.cursor = 'pointer';
+      }, 3000);
     } else {
-      btn.textContent = 'Error — intentá de nuevo';
+      throw new Error('Error en el envío');
     }
-  } catch {
-    btn.textContent = 'Sin conexión';
+  } catch (error) {
+    btn.textContent = 'Error al enviar';
+    btn.classList.add('btn--error');
+    
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove('btn--error');
+      btn.disabled = false;
+      btn.style.cursor = 'pointer';
+    }, 3000);
   }
-
-  setTimeout(() => {
-    btn.textContent = 'Enviar Consulta';
-    btn.classList.remove('btn--success');
-    btn.disabled = false;
-  }, 3500);
 });
 
 // ─── WhatsApp button show on scroll ──────────────────────────────────────────

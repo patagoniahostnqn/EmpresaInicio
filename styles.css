@@ -238,6 +238,11 @@ button {
   border-color: #1A5C3A !important;
 }
 
+.btn--error {
+  background: #D32F2F !important;
+  border-color: #D32F2F !important;
+}
+
 /* ─── NAV ───────────────────────────────────────────── */
 .nav {
   position: fixed;

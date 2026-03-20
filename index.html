@@ -299,24 +299,24 @@
       <form class="contacto__form" id="contacto-form" action="https://formspree.io/f/xaqpkbnj" method="POST" novalidate>
         <div class="form-group">
           <label for="nombre" class="form-label">Nombre completo</label>
-          <input type="text" id="nombre" name="nombre" class="form-input" placeholder="Nombre y apellido" required />
+          <input type="text" id="nombre" name="name" class="form-input" placeholder="Nombre y apellido" required />
         </div>
         <div class="form-group">
           <label for="email" class="form-label">Correo electrónico</label>
-          <input type="email" id="email" name="email" class="form-input" placeholder="patagonia.host.nqn@gmail.com"
+          <input type="email" id="email" name="email" class="form-input" placeholder="tu@email.com"
             required />
         </div>
         <div class="form-group">
           <label for="plan" class="form-label">Plan de interés</label>
           <select id="plan" name="plan" class="form-input form-select">
             <option value="">Seleccionar plan...</option>
-            <option value="basico">Servicio Hosting</option>
-            <option value="desarrollo">Desarrollo Web</option>
+            <option value="Hosting Gestionado">Servicio Hosting</option>
+            <option value="Desarrollo Web">Desarrollo Web</option>
           </select>
         </div>
         <div class="form-group">
           <label for="mensaje" class="form-label">Mensaje</label>
-          <textarea id="mensaje" name="mensaje" class="form-input form-textarea" rows="4"
+          <textarea id="mensaje" name="message" class="form-input form-textarea" rows="4"
             placeholder="Contanos sobre tu proyecto..."></textarea>
         </div>
         <button type="submit" class="btn btn--primary btn--full" id="submit-form">Enviar Consulta</button>
