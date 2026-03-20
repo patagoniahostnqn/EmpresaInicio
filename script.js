@@ -59,66 +59,7 @@ revealEls.forEach((el, i) => {
   observer.observe(el);
 });
 
-// ─── Form Submit — Envío de email ────────────────────────────────────────────
-// OPCIÓN ACTIVA: mailto (abre el cliente de correo del visitante — funciona sin servidor)
-// OPCIÓN WEB: Formspree (ver comentario abajo — requiere cuenta gratuita en formspree.io)
-
-const DESTINO_EMAIL = 'patagonia.host.nqn@gmail.com';
-
-const form = document.getElementById('contacto-form');
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  const nombre = document.getElementById('nombre').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const planEl = document.getElementById('plan');
-  const plan = planEl.options[planEl.selectedIndex].text;
-  const mensaje = document.getElementById('mensaje').value.trim();
-
-  // Validación básica
-  if (!nombre || !email) {
-    document.getElementById('nombre').focus();
-    return;
-  }
-
-  // Construir el mailto
-  const asunto = `Consulta Web — ${plan !== 'Seleccionar plan...' ? plan : 'Sin plan seleccionado'}`;
-  const cuerpo = [
-    `Nombre: ${nombre}`,
-    `Email de contacto: ${email}`,
-    `Plan de interés: ${plan}`,
-    ``,
-    `Mensaje:`,
-    mensaje || '(Sin mensaje adicional)',
-    ``,
-    `---`,
-    `Enviado desde patagoniahost.com`,
-  ].join('\n');
-
-  const mailtoUrl = `mailto:${DESTINO_EMAIL}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
-  window.location.href = mailtoUrl;
-
-  // Feedback visual
-  const btn = document.getElementById('submit-form');
-  btn.textContent = '¡Abriendo tu correo!';
-  btn.classList.add('btn--success');
-  btn.disabled = true;
-
-  setTimeout(() => {
-    btn.textContent = 'Enviar Consulta';
-    btn.classList.remove('btn--success');
-    btn.disabled = false;
-    form.reset();
-  }, 3000);
-});
-
-/* ── OPCIÓN FORMSPREE (para cuando esté online) ──────────────────────────────
-   1. Registrate gratis en https://formspree.io
-   2. Creá un nuevo form apuntando a patagonia.host.nqn@gmail.com
-   3. Copiá tu Form ID (ej: "xrgvdabk") y pegalo abajo
-   4. Cambiá el action del <form> en index.html a: action="https://formspree.io/f/TU_ID"
-   5. Borrá el bloque mailto: de arriba y descomentá este:
-
+// ─── Form Submit — Envío de email con Formspree ──────────────────────────────────
 const form = document.getElementById('contacto-form');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -151,8 +92,6 @@ form.addEventListener('submit', async (e) => {
     btn.disabled = false;
   }, 3500);
 });
-───────────────────────────────────────────────────────────────────────────── */
-
 
 // ─── WhatsApp button show on scroll ──────────────────────────────────────────
 const waBtn = document.getElementById('whatsapp-btn');
